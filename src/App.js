@@ -10,8 +10,8 @@ class App extends Component {
     super();
     this.state = {
       todos: [
-        {task: 'Taste JavaScript', complete: true},
-        {task: 'Buy a unicorn', complete: false }
+        {task: 'Taste JavaScript', complete: true, edit: false},
+        {task: 'Buy a unicorn', complete: false, edit: false }
       ]
     }
   }
@@ -76,6 +76,17 @@ class App extends Component {
       todos: newTodosArray
     })
   }
+  editTodo(editTodo){
+    let newTodosArray = this.state.todos.map(function(todo, index) {
+      if (todo === editTodo){
+        todo.edit = true;
+      }
+      return(todo);
+    })
+    this.setState({
+      todos: newTodosArray
+    })
+  }
 
 
   render() {
@@ -88,6 +99,7 @@ class App extends Component {
             sendTodoToggleToApp={this.toggleTodo.bind(this)}
             sendTodoDestroyToApp={this.destroyTodo.bind(this)}
             itemsLeft={this.itemsLeft()}
+            sendTodoEditToApp={this.editTodo.bind(this)}
             sendTodoToggleAllToApp={this.toggleAll.bind(this)} />
 
     			{/*<!-- This footer should hidden by default and shown when there are todos -->*/}

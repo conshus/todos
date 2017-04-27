@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+let editEnabled = false;
 class Main extends Component {
 
   handleToggle(todo,event) {
@@ -14,10 +14,11 @@ class Main extends Component {
     this.props.sendTodoToggleAllToApp(toggleState);
   }
 
-  handleEdit(event){
-    console.log(event);
+  handleEdit(todo,event){
+    console.log(event.target);
+    this.props.sendTodoEditToApp(todo);
   }
-  
+
   render() {
     return (
       <section className="main">
@@ -28,10 +29,10 @@ class Main extends Component {
           <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->*/}
           {this.props.todos.map((todo, index) => {
             return (
-              <li className={todo.complete ? "completed" : null} key={index}>
+              <li className={todo.complete ? "completed" : null || todo.edit ? "editing" : null} key={index}>
                 <div className="view">
                   <input className="toggle" type="checkbox" checked={todo.complete} onClick={this.handleToggle.bind(this,todo)} />
-                  <label onDoubleClick={this.handleEdit.bind(this)} >{todo.task}</label>
+                  <label onDoubleClick={this.handleEdit.bind(this,todo)} >{todo.task}</label>
                   <button className="destroy" onClick={this.handleDestroy.bind(this,todo)}></button>
                 </div>
                 <input className="edit" value={todo.task} />
